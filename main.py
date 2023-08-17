@@ -14,8 +14,8 @@ def print_bye():
     time.sleep(0.6)
   print("Bye")
 
-#time1 = threading.Thread(target=print_welcome)
-#time2 = threading.Thread(target=print_bye)
+time1 = threading.Thread(target=print_welcome)
+time2 = threading.Thread(target=print_bye)
 
 def main():
     caballo = CaballoConThread(limite=100)

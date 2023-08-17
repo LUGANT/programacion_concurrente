@@ -6,8 +6,6 @@ import random
 
 class CaballoThread(Thread):
 
-    position: int = 0
-
     def __init__(
                 ## constructor heredado
                 self, group: None = None, 
@@ -15,17 +13,25 @@ class CaballoThread(Thread):
                 kwargs: Mapping[str, Any] | None = None, *,
                 daemon: bool | None = None,
                 ## constructor nuevo
-                limite: int
+                limite: int,
+                horse_number: int
                 ) -> None:
         super().__init__(group, target, name, args, kwargs, daemon=daemon)
         self.limite = limite
+        self.horse_number = horse_number
+        self.position: int = 0
 
     def run(self) -> None:
         
-        for i in range(self.limite):
-            self.position += 1
-            print(self.position, end=" ")
+        print("Caballo: ",end=" ")
 
+        for i in range(self.limite):
+            
+            self.position += 1
+            print(f"{self.horse_number}", end="",flush=True)
+            time.sleep(random.randint(0,10))
+        
+        print(f"\nEl caballo {self.horse_number} llego a la meta")
         return super().run()
 
 class PosicionThread(Thread):
