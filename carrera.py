@@ -1,25 +1,24 @@
-import threading
+import curses
+from threading import Thread, Event
 from caballo import CaballoThread
 
-caballo1 = CaballoThread(limite=10,horse_number=1)
-caballo2 = CaballoThread(limite=10,horse_number=2)
-caballo3 = CaballoThread(limite=10,horse_number=3)
-caballo4 = CaballoThread(limite=10,horse_number=4)
-caballo5 = CaballoThread(limite=10,horse_number=5)
+def start_threads(thread_list:list[Thread]):
+    for thread in thread_list:
+        thread.start()    
 
-caballo1.start()
-print()
-caballo2.start()
-print()
-caballo3.start()
-print()
-caballo4.start()
-print()
-caballo5.start()
-print()
+def join_threads(thread_list:list[Thread]):
+    for thread in thread_list:
+        thread.join()    
 
-caballo1.join()
-caballo2.join()
-caballo3.join()
-caballo4.join()
-caballo5.join()
+num_caballos = int(input("Ingrese la cantidad de caballos a participar: "))
+
+referee = Event()
+meta = 10
+caballos: list[Thread] = []
+
+for i in range(num_caballos):
+    caballos.append(CaballoThread(limite=meta, horse_number=i+1, referee=referee))
+
+start_threads(caballos)
+
+join_threads(caballos)
